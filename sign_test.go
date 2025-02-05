@@ -35,7 +35,7 @@ func TestSign(t *testing.T) {
 	}
 	signer := cmac.New(ciph)
 
-	p := PacketCodec(pkt)
+	p := smb2.PacketCodec(pkt)
 
 	if !bytes.Equal(p.Signature(), signature) {
 		t.Error("fail")
