@@ -6,6 +6,7 @@ import (
 	"crypto/sha512"
 	"fmt"
 	"os"
+	"errors"
 	"sync"
 	"sync/atomic"
 	"time"
@@ -616,7 +617,7 @@ func accept(cmd uint16, pkt []byte) (res []byte, err error) {
 		return nil, &ResponseError{Code: uint32(status)}
     default:
         // handle other statuses, optionally log or wrap error
-        return nil, errors.New("SMB2 operation failed: NtStatus=0x" + fmt.Sprintf("%08X", ntStatus))
+        return nil, errors.New("SMB2 operation failed: NtStatus=0x" + fmt.Sprintf("%08X", status))
 	}
 
 	switch cmd {
