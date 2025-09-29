@@ -72,7 +72,6 @@ package main
 
 import (
 	"io"
-	"io/ioutil"
 	"net"
 
 	"github.com/hirochachacha/go-smb2"
@@ -121,7 +120,7 @@ func main() {
 		panic(err)
 	}
 
-	bs, err := ioutil.ReadAll(f)
+	bs, err := io.ReadAll(f)
 	if err != nil {
 		panic(err)
 	}
