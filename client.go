@@ -13,11 +13,11 @@ import (
 	"sync"
 	"time"
 
-    "github.com/leolovesmile/go-smb2/internal/erref"
+	"github.com/cloudsoda/sddl"
+	"github.com/leolovesmile/go-smb2/internal/erref"
 	"github.com/leolovesmile/go-smb2/internal/msrpc"
 	"github.com/leolovesmile/go-smb2/internal/smb2"
 	"github.com/leolovesmile/go-smb2/internal/utf16le"
-	"github.com/cloudsoda/sddl"
 )
 
 // SecurityInformationRequestFlags the data that is expected to be returned in Security Information
@@ -946,21 +946,33 @@ func (fs *Share) ReadFile(filename string) ([]byte, error) {
 		size = maxInt
 	}
 
+	// TODO: huge memory crash risk, should use Buffered Read Usage, or even refactor the API
 	data := make([]byte, 0, size)
 	for {
 		if len(data) >= cap(data) {
-			d := append(data[:cap(data)], 0)
-			data = d[:len(data)]
+			// grow the buffer
+			newCap := cap(data) * 2
+			if newCap == 0 {
+				newCap = 512
+			}
+			d := make([]byte, len(data), newCap)
+			copy(d, data)
+			data = d
 		}
 		n, err := f.Read(data[len(data):cap(data)])
 		data = data[:len(data)+n]
 		if err != nil {
 			if err == io.EOF {
-				err = nil
+				return data, nil
 			}
 			return data, err
 		}
+		// If no bytes were read and no error, break to avoid infinite loop
+		if n == 0 {
+			break
+		}
 	}
+	return data, nil
 }
 
 func (fs *Share) WriteFile(filename string, data []byte, perm os.FileMode) error {
