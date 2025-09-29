@@ -1103,7 +1103,7 @@ func (f *File) Read(b []byte) (n int, err error) {
 
 	off, err := f.seek(0, io.SeekCurrent)
 	if err != nil {
-		return -1, &os.PathError{Op: "read", Path: f.name, Err: err}
+		return 0, &os.PathError{Op: "read", Path: f.name, Err: err}
 	}
 
 	n, err = f.readAt(b, off)
@@ -1125,7 +1125,7 @@ func (f *File) Read(b []byte) (n int, err error) {
 // ReadAt implements io.ReaderAt.
 func (f *File) ReadAt(b []byte, off int64) (n int, err error) {
 	if off < 0 {
-		return -1, os.ErrInvalid
+		return 0, os.ErrInvalid
 	}
 
 	n, err = f.readAt(b, off)
@@ -1182,7 +1182,7 @@ func (f *File) maxTransactSize() int {
 
 func (f *File) readAt(b []byte, off int64) (n int, err error) {
 	if off < 0 {
-		return -1, os.ErrInvalid
+		return 0, os.ErrInvalid
 	}
 
 	maxReadSize := f.maxReadSize()
@@ -1600,7 +1600,7 @@ func (f *File) Write(b []byte) (n int, err error) {
 
 	off, err := f.seek(0, io.SeekCurrent)
 	if err != nil {
-		return -1, &os.PathError{Op: "write", Path: f.name, Err: err}
+		return 0, &os.PathError{Op: "write", Path: f.name, Err: err}
 	}
 
 	n, err = f.writeAt(b, off)
@@ -1627,7 +1627,7 @@ func (f *File) WriteAt(b []byte, off int64) (n int, err error) {
 
 func (f *File) writeAt(b []byte, off int64) (n int, err error) {
 	if off < 0 {
-		return -1, os.ErrInvalid
+		return 0, os.ErrInvalid
 	}
 
 	if len(b) == 0 {
@@ -1643,14 +1643,14 @@ func (f *File) writeAt(b []byte, off int64) (n int, err error) {
 		case len(b)-n <= maxWriteSize:
 			m, err := f.writeAtChunk(b[n:], int64(n)+off)
 			if err != nil {
-				return -1, err
+				return 0, err
 			}
 
 			n += m
 		default:
 			m, err := f.writeAtChunk(b[n:n+maxWriteSize], int64(n)+off)
 			if err != nil {
-				return -1, err
+				return 0, err
 			}
 
 			n += m
