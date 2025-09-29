@@ -13,10 +13,10 @@ import (
 	"sync"
 	"time"
 
-	. "github.com/leolovesmile/go-smb2/internal/erref"
-	. "github.com/leolovesmile/go-smb2/internal/smb2"
-
+    "github.com/leolovesmile/go-smb2/internal/erref"
 	"github.com/leolovesmile/go-smb2/internal/msrpc"
+	"github.com/leolovesmile/go-smb2/internal/smb2"
+	"github.com/leolovesmile/go-smb2/internal/utf16le"
 	"github.com/cloudsoda/sddl"
 )
 

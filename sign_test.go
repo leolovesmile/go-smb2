@@ -7,7 +7,7 @@ import (
 
 	"github.com/leolovesmile/go-smb2/internal/crypto/cmac"
 
-	. "github.com/leolovesmile/go-smb2/internal/smb2"
+	"github.com/leolovesmile/go-smb2/internal/smb2"
 
 	"testing"
 )

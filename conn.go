@@ -9,8 +9,8 @@ import (
 	"sync"
 	"sync/atomic"
 
-	. "github.com/leolovesmile/go-smb2/internal/erref"
-	. "github.com/leolovesmile/go-smb2/internal/smb2"
+	"github.com/leolovesmile/go-smb2/internal/erref"
+	"github.com/leolovesmile/go-smb2/internal/smb2"
 )
 
 // Negotiator contains options for func (*Dialer) Dial.
@@ -607,7 +607,7 @@ func accept(cmd uint16, pkt []byte) (res []byte, err error) {
 		return nil, os.ErrNotExist
 	case erref.STATUS_ACCESS_DENIED, erref.STATUS_CANNOT_DELETE:
 		return nil, os.ErrPermission
-	case STATUS_NO_MORE_FILES:
+	case erref.STATUS_NO_MORE_FILES:
         // special case: return nil result and a specific error
 		return nil, &ResponseError{Code: uint32(status)}
 	}

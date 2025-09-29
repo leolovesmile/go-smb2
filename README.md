@@ -233,7 +233,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/cloudsoda/go-smb2"
+	"github.com/hirochachacha/go-smb2"
 	"github.com/jcmturner/gokrb5/v8/client"
 	"github.com/jcmturner/gokrb5/v8/config"
 )

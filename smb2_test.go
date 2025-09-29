@@ -11,11 +11,11 @@ import (
 	"reflect"
 	"sort"
 	"strings"
+	"testing"
 	"time"
 
 	"github.com/leolovesmile/go-smb2"
-
-	"testing"
+	"github.com/stretchr/testify/require"
 )
 
 func join(ss ...string) string {
