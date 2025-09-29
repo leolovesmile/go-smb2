@@ -43,7 +43,7 @@ type ResponseError struct {
 }
 
 func (err *ResponseError) Error() string {
-	return fmt.Sprintf("response error: %v", NtStatus(err.Code))
+	return fmt.Sprintf("response error: %v", erref.NtStatus(err.Code))
 }
 
 // ContextError wraps a context error to support os.IsTimeout function.
